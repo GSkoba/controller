@@ -1,4 +1,4 @@
-package util;
+package com.skobelev.web.api.util;
 
 import java.util.Date;
 
@@ -20,6 +20,30 @@ public class ControllerData {
         this.time_controller = time_controller;
         this.time_server = time_server;
         this.disc = disc;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getId_controller() {
+        return id_controller;
+    }
+
+    public String getWeither() {
+        return weither;
+    }
+
+    public Date getTime_controller() {
+        return time_controller;
+    }
+
+    public Date getTime_server() {
+        return time_server;
+    }
+
+    public String getDisc() {
+        return disc;
     }
 
     @Override

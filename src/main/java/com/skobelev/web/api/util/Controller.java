@@ -1,4 +1,4 @@
-package util;
+package com.skobelev.web.api.util;
 
 public class Controller {
     private int id;

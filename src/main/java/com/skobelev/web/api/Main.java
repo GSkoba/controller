@@ -1,9 +1,10 @@
-import storage.MySqlStorage;
-import util.Controller;
-import util.ControllerData;
+package com.skobelev.web.api;
+
+import com.skobelev.web.api.storage.MySqlStorage;
+import com.skobelev.web.api.util.Controller;
+import com.skobelev.web.api.util.ControllerData;
 
 import java.io.FileInputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 

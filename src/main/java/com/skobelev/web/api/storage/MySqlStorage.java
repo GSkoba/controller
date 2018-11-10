@@ -1,16 +1,16 @@
-package storage;
+package com.skobelev.web.api.storage;
 
-import util.Controller;
-import util.ControllerData;
+import com.skobelev.web.api.util.Controller;
+import com.skobelev.web.api.util.ControllerData;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MySqlStorage {
-    private static String url;
-    private static String user;
-    private static String password;
+    private String url;
+    private String user;
+    private String password;
     private static Connection con;
     private static Statement stmt;
     private static PreparedStatement statement;
@@ -21,46 +21,6 @@ public class MySqlStorage {
         this.user = user;
         this.password = password;
     }
-
-    public int getBooksCount() {
-        String query = "select count(*) from books";
-
-        try {
-            // opening database connection to MySQL server
-            con = DriverManager.getConnection(url, user, password);
-
-            // getting Statement object to execute query
-            stmt = con.createStatement();
-
-            // executing SELECT query
-            rs = stmt.executeQuery(query);
-
-            int count = 0;
-
-            while (rs.next()) {
-                count = rs.getInt(1);
-            }
-
-            return count;
-
-        } catch (SQLException sqlEx) {
-            sqlEx.printStackTrace();
-        } finally {
-            //close connection ,stmt and resultset here
-            try {
-                con.close();
-            } catch (SQLException se) { /*can't do anything */ }
-            try {
-                stmt.close();
-            } catch (SQLException se) { /*can't do anything */ }
-            try {
-                rs.close();
-            } catch (SQLException se) { /*can't do anything */ }
-        }
-
-        return 0;
-    }
-
 
     public List<Controller> getController() {
         String query = "select * from controller;";
@@ -145,12 +105,11 @@ public class MySqlStorage {
         return new ArrayList<>();
     }
 
-    public boolean containsController(int id, List<Controller> controllers){
+    private boolean containsController(int id, List<Controller> controllers){
         for (Controller controller: controllers
              ) {
             if (controller.getId() == id) return true;
         }
-
         return false;
     }
 
