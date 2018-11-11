@@ -10,6 +10,15 @@ public class ControllerData {
     private Date time_server;
     private String disc;
 
+    {
+        id = 1;
+        id_controller = 1;
+        weither = "";
+        time_controller = new Date();
+        time_server = new Date();
+        disc = "";
+    }
+
     public ControllerData() {
     }
 
@@ -19,6 +28,22 @@ public class ControllerData {
         this.weither = weither;
         this.time_controller = time_controller;
         this.time_server = time_server;
+        this.disc = disc;
+    }
+
+    public ControllerData(int id_controller, String weither, Date time_controller, String disc) {
+        this.id_controller = id_controller;
+        this.weither = weither;
+        this.time_controller = time_controller;
+        this.disc = disc;
+    }
+
+    public ControllerData(int id, int id_controller, String weither, Date time_controller, String disc) {
+        this.id = id;
+        this.id_controller = id_controller;
+        this.weither = weither;
+        this.time_controller = time_controller;
+        this.time_server = new Date();
         this.disc = disc;
     }
 

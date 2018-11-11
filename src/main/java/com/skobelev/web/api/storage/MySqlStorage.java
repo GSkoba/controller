@@ -105,25 +105,25 @@ public class MySqlStorage {
         return new ArrayList<>();
     }
 
-    private boolean containsController(int id, List<Controller> controllers){
-        for (Controller controller: controllers
-             ) {
+    private boolean containsController(int id, List<Controller> controllers) {
+        for (Controller controller : controllers
+        ) {
             if (controller.getId() == id) return true;
         }
         return false;
     }
 
-    public void authController(Controller controller){
+    private void authController(Controller controller) {
         List<Controller> controllers = getController();
-        if (containsController(controller.getId(), controllers)){
+        if (containsController(controller.getId(), controllers)) {
             return;
         } else {
             String query = "insert into controller(id, controller_name) value(?,?);";
             try {
                 con = DriverManager.getConnection(url, user, password);
                 statement = con.prepareStatement(query);
-                statement.setInt(1,controller.getId());
-                statement.setString(2,controller.getName());
+                statement.setInt(1, controller.getId());
+                statement.setString(2, controller.getName());
                 statement.executeUpdate();
             } catch (SQLException sqlEx) {
                 sqlEx.printStackTrace();
@@ -138,6 +138,42 @@ public class MySqlStorage {
                 } catch (SQLException se) {
                     se.printStackTrace();
                 }
+            }
+        }
+    }
+
+    private java.sql.Date convertUtilToSql(java.util.Date uDate) {
+        java.sql.Date sDate = new java.sql.Date(uDate.getTime());
+        return sDate;
+    }
+
+
+    public void uploadControllerData(Controller controller, ControllerData controllerData) {
+        authController(controller);
+        String query = "insert into controller_data(id_controller, weither, time_controller, time_server, disc) values (?,?,?,?,?);";
+        try {
+            con = DriverManager.getConnection(url, user, password);
+            statement = con.prepareStatement(query);
+            statement.setInt(1, controllerData.getId_controller());
+            statement.setString(2, controllerData.getWeither());
+            java.sql.Time timeController = new Time(controllerData.getTime_controller().getTime());
+            statement.setTime(3, timeController);
+            java.sql.Time timeServer = new Time(controllerData.getTime_server().getTime());
+            statement.setTime(4, timeServer);
+            statement.setString(5, controllerData.getDisc());
+            statement.executeUpdate();
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                statement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
             }
         }
     }

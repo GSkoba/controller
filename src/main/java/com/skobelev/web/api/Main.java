@@ -28,24 +28,6 @@ public class Main {
 
     public static void main(String args[]) {
         MySqlStorage mySqlStorage = new MySqlStorage(url, user, password);
-        System.out.println(mySqlStorage.getBooksCount());
-        List<Controller> controllers = mySqlStorage.getController();
-
-        for (Controller elem: controllers
-             ) {
-            System.out.println(elem);
-        }
-
-        List<ControllerData> controllerData = mySqlStorage.getAllData();
-        for (ControllerData elem: controllerData
-             ) {
-            System.out.println(elem);
-        }
-
-        Controller controllerTom = new Controller(10,"tom");
-        Controller controllerTest = new Controller(1,"test");
-        mySqlStorage.authController(controllerTom);
-        mySqlStorage.authController(controllerTest);
 
     }
 

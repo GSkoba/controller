@@ -41,4 +41,8 @@ public class MainService {
     public List<ControllerData> getAllData() {
         return mySqlStorage.getAllData();
     }
+
+    public void uploadData(Controller controller, ControllerData controllerData){
+        mySqlStorage.uploadControllerData(controller, controllerData);
+    }
 }
