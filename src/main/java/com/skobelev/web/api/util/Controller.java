@@ -4,7 +4,16 @@ public class Controller {
     private int id;
     private String name;
 
+    {
+        id = 1;
+        name = "";
+    }
+
     public Controller() {
+    }
+
+    public Controller(int id) {
+        this.id = id;
     }
 
     public Controller(int id, String name) {

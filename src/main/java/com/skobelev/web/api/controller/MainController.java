@@ -65,10 +65,30 @@ public class MainController {
             @RequestParam(value = "weither") String weither,
             @RequestParam(value = "time_controller") int timeController,
             @RequestParam(value = "disc") String disc,
-            HttpServletResponse response){
+            HttpServletResponse response) {
         try {
             Controller controller = new Controller(idController, nameController);
             ControllerData controllerData = new ControllerData(idController, weither, new Date(timeController), disc);
+            log.info("uploadData::start");
+            return uploadData(controller, controllerData, response);
+        } catch (IllegalArgumentException e) {
+            log.error("Error: ", e);
+            response.setStatus(400);
+            return new WebResult(e.getMessage());
+        } catch (Exception e) {
+            log.error("Error: ", e);
+            response.setStatus(500);
+            return new WebResult(e.getMessage());
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/upload-data", headers = "Accept=application/json;charset=UTF-8")
+    @ResponseBody
+    public WebResult uploadData(
+            @RequestBody Controller controller,
+            @RequestBody ControllerData controllerData,
+            HttpServletResponse response) {
+        try {
             log.info("uploadData::start");
             mainService.uploadData(controller, controllerData);
             return new WebResult("ok");
@@ -83,6 +103,41 @@ public class MainController {
         }
     }
 
-    
+    @RequestMapping(method = RequestMethod.GET, value = "/get-controller-data", headers = "Accept=application/json;charset=UTF-8")
+    @ResponseBody
+    public WebResult getControllerData(
+            @RequestParam(value = "id") int id,
+            HttpServletResponse response) {
+        try {
+            log.info("uploadData::start");
+            return getControllerData(new Controller(id), response);
+        } catch (IllegalArgumentException e) {
+            log.error("Error: ", e);
+            response.setStatus(400);
+            return new WebResult(e.getMessage());
+        } catch (Exception e) {
+            log.error("Error: ", e);
+            response.setStatus(500);
+            return new WebResult(e.getMessage());
+        }
+    }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/get-controller-data", headers = "Accept=application/json;charset=UTF-8")
+    @ResponseBody
+    public WebResult getControllerData(
+            @RequestBody Controller controller,
+            HttpServletResponse response) {
+        try {
+            log.info("uploadData::start");
+            return new ControllerDataResult(mainService.getControllerData(controller));
+        } catch (IllegalArgumentException e) {
+            log.error("Error: ", e);
+            response.setStatus(400);
+            return new WebResult(e.getMessage());
+        } catch (Exception e) {
+            log.error("Error: ", e);
+            response.setStatus(500);
+            return new WebResult(e.getMessage());
+        }
+    }
 }

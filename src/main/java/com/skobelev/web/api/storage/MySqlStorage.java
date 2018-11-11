@@ -142,12 +142,6 @@ public class MySqlStorage {
         }
     }
 
-    private java.sql.Date convertUtilToSql(java.util.Date uDate) {
-        java.sql.Date sDate = new java.sql.Date(uDate.getTime());
-        return sDate;
-    }
-
-
     public void uploadControllerData(Controller controller, ControllerData controllerData) {
         authController(controller);
         String query = "insert into controller_data(id_controller, weither, time_controller, time_server, disc) values (?,?,?,?,?);";
@@ -177,4 +171,50 @@ public class MySqlStorage {
             }
         }
     }
+
+    public List<ControllerData> getControllerData(Controller controller) {
+        authController(controller);
+        String query = "select * from controller_data where id_controller = ?;";
+        List<ControllerData> controllerList = new ArrayList<>();
+        ControllerData controllerData = null;
+        try {
+            con = DriverManager.getConnection(url, user, password);
+            statement = con.prepareStatement(query);
+            statement.setInt(1, controller.getId());
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                controllerData = new ControllerData(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getTime(4),
+                        rs.getTime(5),
+                        rs.getString(6)
+                );
+                controllerList.add(controllerData);
+            }
+            return controllerList;
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                stmt.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                rs.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return new ArrayList<>();
+    }
+
+
 }
