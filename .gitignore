@@ -4,6 +4,9 @@
 # But not Java files...
 !.gitignore
 !*.java
+!*.css
+!*.js
+!*.html
 !build.gradle
 # ...even if they are in subdirectories
 !*/

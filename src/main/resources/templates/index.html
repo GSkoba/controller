@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/mvc">
+    <head>
+
+        <meta charset="UTF-8">
+
+        <title>Title</title>
+
+        <script type="text/javascript" th:src="@{/js/Request.js}"></script>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
+
+    </head>
+
+    <body>
+
+    <div id="block"><H4>Hello</H4></div>
+
+    <input class="test" value="Нажми меня" onclick="requestForServer('GET','/test?',sendRes)" type="button">
+
+    <input value="Get all controllers" onclick="controllers()" type="button">
+
+    </body>
+
+</html>
